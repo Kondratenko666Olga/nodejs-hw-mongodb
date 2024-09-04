@@ -11,6 +11,7 @@ import path from 'node:path';
 import handlebars from 'handlebars';
 import { sendMail } from "../utils/sendEmail.js";
 
+import {env} from '../utils/env.js';
 
 // Константи для часу життя токенів
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
@@ -108,12 +109,14 @@ export async function requestResetEmail(email) {
     throw createHttpError(404, 'User not found');
   }
 
+const secretPass = env('JWT_SECRET');
+
   const resetToken = jwt.sign(
     {
       sub: user._id,
       email: user.email,
     },
-    process.env.JWT_SECRET,
+    secretPass,
     { expiresIn: '15m' },
   );
 
@@ -124,10 +127,11 @@ export async function requestResetEmail(email) {
   const template = handlebars.compile(templateSource);
 
   const html = template({ name: user.name, resetToken });
+  const fromEmail = env('SMTP_FROM_EMAIL');
 
   try {
     await sendMail({
-      from: process.env.SMTP_FROM_EMAIL,
+      from: fromEmail,
       to: email,
       subject: 'Reset your password',
       html,
