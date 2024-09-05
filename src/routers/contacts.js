@@ -10,7 +10,7 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { isValidId } from '../middlewares/isValidId.js';
-import { contactSchema, updateContactSchema } from '../validation/contactSchemas.js';
+import { contactSchema,  updateContactSchema } from '../validation/contactSchemas.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../../src/middlewares/upload.js';
 
@@ -25,7 +25,7 @@ router.post('/', createContact);
 
 router.get('/', ctrlWrapper(getAllContacts));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactById));
-router.post('/', jsonParser,  upload.single('photo'), validateBody(contactSchema), ctrlWrapper(createContact));
+router.post('/', jsonParser,  upload.single('photo'),validateBody(contactSchema),ctrlWrapper(createContact));
 router.patch('/:contactId', isValidId, jsonParser, validateBody(updateContactSchema), ctrlWrapper(updateContact));
 router.delete('/:contactId', isValidId, ctrlWrapper(deleteContact));
 
