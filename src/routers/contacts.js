@@ -20,8 +20,8 @@ const jsonParser = express.json();
 // Застосовуємо middleware аутентифікації до всіх маршрутів
 router.use(authenticate);
 
-router.get('/', getAllContacts);
-router.post('/', createContact);
+// router.get('/', getAllContacts);
+// router.post('/', createContact);
 
 router.get('/', ctrlWrapper(getAllContacts));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactById));
