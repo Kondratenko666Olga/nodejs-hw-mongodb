@@ -11,6 +11,7 @@ import {
   resetPassword
 } from '../services/auth.js';
 
+import{ generateAuthUrl } from "../utils/googleOAuth2.js";
 
 // Контролер для реєстрації
 export const register = async (req, res, next) => {
@@ -176,5 +177,15 @@ export async function resetPasswordController(req, res) {
     status: 200,
     message: 'Password reset successfully',
     data: {},
+  });
+}
+
+//Контроллер для запиту на отримання посилання на google autorization
+export async function getOAuthURLController(req, res) {
+  const url = generateAuthUrl();
+  res.send({
+    status: 200,
+    message: 'Successfully get Google OAuth URL',
+    data: { url },
   });
 }
