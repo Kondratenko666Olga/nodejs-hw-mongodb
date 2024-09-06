@@ -8,7 +8,8 @@ import {
   deleteSessionById,
   refreshUsersSession,
   requestResetEmail,
-  resetPassword
+  resetPassword,
+  loginOrRegisterWithGoogle,
 } from '../services/auth.js';
 
 import{ generateAuthUrl } from "../utils/googleOAuth2.js";
@@ -187,5 +188,30 @@ export async function getOAuthURLController(req, res) {
     status: 200,
     message: 'Successfully get Google OAuth URL',
     data: { url },
+  });
+}
+
+//Передача коду із посилання після google autorization
+export async function ConfirmOAuthController(req, res) {
+  const {code} = req.body;
+  const newSession = await loginOrRegisterWithGoogle(code);
+
+  res.cookie('refreshToken', newSession.refreshToken, {
+    httpOnly: true,
+    maxAge: newSession.session.refreshTokenValidUntil - Date.now(),
+  });
+
+  //Встановлюємо sessionId
+  res.cookie('sessionId', newSession.session._id, {
+    httpOnly: true,
+    maxAge: newSession.session.refreshTokenValidUntil - Date.now(),
+  });
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully refreshed a session!`,
+    data: {
+      accessToken: newSession.session.accessToken,
+    },
   });
 }

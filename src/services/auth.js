@@ -13,6 +13,9 @@ import { sendMail } from "../utils/sendEmail.js";
 
 import {env} from '../utils/env.js';
 
+import {validateCod} from '../utils/googleOAuth2.js';
+import { Session } from "inspector";
+
 // Константи для часу життя токенів
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -137,4 +140,52 @@ const secretPass = env('JWT_SECRET');
     console.log(e);
     throw createHttpError(500, 'Cannot send email');
   }
+}
+
+
+//Передача коду із посилання після google autorization
+export async function loginOrRegisterWithGoogle(code) {
+  const ticket = await validateCod(code);
+
+  const payload = ticket.getPayload();
+
+  if (typeof payload == "undefined") {
+    throw createHttpError(401, "Unauthorized");
+  }
+
+  const user = await UserCollection.findOne({ email: payload.email });
+
+  const password = await bcrypt.hash(crypto.randomBytes(30).toString("base64"), 10);
+
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+
+  if (user === null ) {
+    const createdUser = await UserCollection.create({
+      email: payload.email,
+      name: payload.name,
+      password
+    });
+
+  return Session.create({
+    userId: createdUser._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
+  };
+
+  await SessionCollection.deleteOne({ _id: user._id });
+
+  return Session.create({
+    userId: user._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
+
+
+
 }

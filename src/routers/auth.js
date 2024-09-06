@@ -6,7 +6,8 @@ import {
     logout,
     resetPasswordController,
     requestResetEmailController,
-    getOAuthURLController
+    getOAuthURLController,
+    ConfirmOAuthController,
 } from '../controllers/auth.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
@@ -15,7 +16,8 @@ import {
     registerSchema,
     loginUserSchema,
     resetPasswordSchema,
-    requestResetEmailSchema
+    requestResetEmailSchema,
+    ConfirmOAuthSchema,
 } from '../validation/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
@@ -35,6 +37,7 @@ router.post('/send-reset-email', jsonParser, validateBody(requestResetEmailSchem
 router.post('/reset-password', jsonParser, validateBody(resetPasswordSchema), ctrlWrapper(resetPasswordController));
 //Маршрут для запиту на отримання посилання на google autorization
 router.get('/get-oauth-url', ctrlWrapper(getOAuthURLController));
-
+//Передача коду із посилання після google autorization
+router.post("/confirm-oauth", jsonParser, validateBody(ConfirmOAuthSchema), ctrlWrapper(ConfirmOAuthController));
 
 export default router;
