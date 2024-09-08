@@ -11,8 +11,6 @@ tags:
   # теги, що ви будете використовувати
   - name: contacts
     description: operations about contacts.
-  - name: auth
-    description: auth operations
 servers:
   #посилання на задеплоєний сайт
   - url: http://localhost:3000
