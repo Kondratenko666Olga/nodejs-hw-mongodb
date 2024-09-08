@@ -1,8 +1,8 @@
 tags:
   - Contact
-summary: Get Contact By Id
-operationId: getContactById
-description: 'Get Contact By Id. The value is dynamically passed as a parameter. The route will process the request for a specific contact using the ID provided by the client.'
+summary: Update Contact By Id
+operationId: updateContact
+description: 'Update Contact By Id.'
 security:
   - bearerAuth: []
 parameters:
@@ -10,8 +10,7 @@ parameters:
     name: id
     required: true
     schema:
-      type: string
-      example: 66aa10142b02fc8e804c5b95
+        $ref: ../../../components/schemas/updateContact.yaml
 responses:
   '200':
     description: 'Get Contact By Id'
@@ -29,10 +28,10 @@ responses:
               example: 200
             massage:
               type: string
-              example: 'Succesfuly found contact with id 66aa10142b02fc8e804c5b95'
+              example: 'Successfully patched a contact!'
             data:
               type: object
-              $ref: ../../../components/schemas/contact.yaml
+              $ref: ../../../components/schemas/updateContact.yaml
   '404':
     description: 'contact not found'
     content:

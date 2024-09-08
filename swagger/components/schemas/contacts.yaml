@@ -1,11 +1,39 @@
 type: object
+required:
+  - data
+  - page
+  - perPage
+  - totalItems
+  - totalPages
+  - hasPreviousPage
+  - hasNextPage
 properties:
-  _id:
-    description: "contacts id"
-    type: string
-    example:
-  name:
-    description: "contacts id"
-    type: string
-    example: "John Doe"
-  
+  data:
+    description: "array of contacts"
+    type: array
+    items:
+      $ref: ../../components/schemas/contact.yaml
+  page:
+    description: "number of current page"
+    type: number
+    example: "1"
+  perPage:
+    description: "quantity of contacts per page"
+    type: number
+    example: "10"
+  totalItems:
+    description: "total contacts"
+    type: number
+    example: '4'
+  totalPages:
+    description: "total pages"
+    type: number
+    example: '1'
+  hasPreviousPage:
+    description: "is current page has previous page"
+    type: boolean
+    example: false
+  hasNextPage:
+    description: "is current page has next page"
+    type: boolean
+    example: false

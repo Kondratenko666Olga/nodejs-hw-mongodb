@@ -1,0 +1,28 @@
+tags:
+  - contacts
+summary: Get all contacts
+operationId: getAllContacts
+description: 'Get all contacts.'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Get all contacts'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - massage
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            massage:
+              type: string
+              example: 'Successfully found contacts!'
+            data:
+              type: object
+              $ref: ../../components/schemas/contacts.yaml

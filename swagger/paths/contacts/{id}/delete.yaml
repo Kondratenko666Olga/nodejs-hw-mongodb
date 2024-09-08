@@ -1,0 +1,34 @@
+tags:
+  - Contact
+summary: Delete Contact By Id
+operationId: deleteContact
+description: 'Delete Contact By Id.'
+security:
+  - bearerAuth: []
+parameters:
+  - in: delete
+    name: id
+    required: true
+responses:
+  '204':
+    description: 'Get Contact By Id'
+  '404':
+    description: 'contact not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - massage
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            massage:
+              type: string
+              example: 'Contact not found'
+            data:
+              type: object
+              example: {}

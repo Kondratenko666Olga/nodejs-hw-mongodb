@@ -1,0 +1,33 @@
+tags:
+  - contacts
+summary: Create contact
+operationId: createContact
+description: 'create a contact.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        $ref: ../../components/schemas/contact.yaml
+responses:
+  '201':
+    description: ''
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - massage
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            massage:
+              type: string
+              example: 'Successfully created a contact!'
+            data:
+              type: object
+              $ref: ../../components/schemas/contact.yaml

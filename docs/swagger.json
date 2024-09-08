@@ -12,9 +12,6 @@
   "servers": [
     {
       "url": "http://localhost:3000"
-    },
-    {
-      "url": null
     }
   ],
   "tags": [
@@ -27,12 +24,425 @@
       "description": "auth operations"
     }
   ],
-  "paths": null,
+  "paths": {
+    "/contacts": {
+      "get": {
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Get all contacts",
+        "operationId": "getAllContacts",
+        "description": "Get all contacts.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "Successfully found contacts!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contacts"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Create contact",
+        "operationId": "createContact",
+        "description": "create a contact.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "Successfully created a contact!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "tags": [
+          "Contact"
+        ],
+        "summary": "Get Contact By Id",
+        "operationId": "getContactById",
+        "description": "Get Contact By Id. The value is dynamically passed as a parameter. The route will process the request for a specific contact using the ID provided by the client.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66aa10142b02fc8e804c5b95"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Contact By Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "Succesfuly found contact with id 66aa10142b02fc8e804c5b95"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "contact with id 66aa10142b02fc8e804c5b95 not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contact"
+        ],
+        "summary": "Update Contact By Id",
+        "operationId": "updateContact",
+        "description": "Update Contact By Id.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/updateContact"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Contact By Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "Successfully patched a contact!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/updateContact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "massage",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "massage": {
+                      "type": "string",
+                      "example": "contact with id 66aa10142b02fc8e804c5b95 not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "contact": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "phoneNumber",
+          "email",
+          "isFavourite",
+          "contactType",
+          "photo"
+        ],
+        "properties": {
+          "_id": {
+            "description": "contact id",
+            "type": "string",
+            "example": "66995563aac8191253f0bfd8"
+          },
+          "name": {
+            "description": "contact name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "phoneNumber": {
+            "description": "contact phone number",
+            "type": "string",
+            "example": "+380444581718"
+          },
+          "email": {
+            "description": "contact email",
+            "type": "string",
+            "example": "johndoe@gmail.com"
+          },
+          "isFavourite": {
+            "description": "favorite contact",
+            "type": "boolean",
+            "example": true
+          },
+          "contactType": {
+            "description": "type of contact",
+            "type": "string",
+            "example": "personal"
+          },
+          "photo": {
+            "description": "contact photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1724438545/g3n05nth0sgqzyakh0dm.jpg",
+            "default": null
+          }
+        }
+      },
+      "contacts": {
+        "type": "object",
+        "required": [
+          "data",
+          "page",
+          "perPage",
+          "totalItems",
+          "totalPages",
+          "hasPreviousPage",
+          "hasNextPage"
+        ],
+        "properties": {
+          "data": {
+            "description": "array of contacts",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/contact"
+            }
+          },
+          "page": {
+            "description": "number of current page",
+            "type": "number",
+            "example": "1"
+          },
+          "perPage": {
+            "description": "quantity of contacts per page",
+            "type": "number",
+            "example": "10"
+          },
+          "totalItems": {
+            "description": "total contacts",
+            "type": "number",
+            "example": "4"
+          },
+          "totalPages": {
+            "description": "total pages",
+            "type": "number",
+            "example": "1"
+          },
+          "hasPreviousPage": {
+            "description": "is current page has previous page",
+            "type": "boolean",
+            "example": false
+          },
+          "hasNextPage": {
+            "description": "is current page has next page",
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "updateContact": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "description": "contact id",
+            "type": "string",
+            "example": "66995563aac8191253f0bfd8"
+          },
+          "name": {
+            "description": "contact name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "phoneNumber": {
+            "description": "contact phone number",
+            "type": "string",
+            "example": "+380444581718"
+          },
+          "email": {
+            "description": "contact email",
+            "type": "string",
+            "example": "johndoe@gmail.com"
+          },
+          "isFavourite": {
+            "description": "favorite contact",
+            "type": "boolean",
+            "example": true
+          },
+          "contactType": {
+            "description": "type of contact",
+            "type": "string",
+            "example": "personal"
+          },
+          "photo": {
+            "description": "contact photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1724438545/g3n05nth0sgqzyakh0dm.jpg",
+            "default": null
+          }
+        }
       }
     }
   }
