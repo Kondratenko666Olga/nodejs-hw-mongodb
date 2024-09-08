@@ -6,9 +6,12 @@ description: 'Delete Contact By Id.'
 security:
   - bearerAuth: []
 parameters:
-  - in: delete
+  - in: path
     name: id
     required: true
+    schema:
+      type: string
+      example: 66aa10142b02fc8e804c5b95
 responses:
   '204':
     description: 'Get Contact By Id'
