@@ -1,17 +1,9 @@
 type: object
 required:
-  -  _id
   - name
   - phoneNumber
-  - email
-  - isFavourite
   - contactType
-  - photo
 properties:
-  _id:
-    description: "contact id"
-    type: string
-    example: 66995563aac8191253f0bfd8
   name:
     description: "contact name"
     type: string
