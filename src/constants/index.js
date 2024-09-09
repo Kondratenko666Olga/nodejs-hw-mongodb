@@ -1,3 +1,6 @@
+import path from 'node:path';
+
+
 export const SORT_ORDER = {
     ASC: 'asc',
     DESC: 'desc',
@@ -24,3 +27,5 @@ export const SORT_ORDER = {
     SECRET: process.env.CLOUDINARY_API_SECRET,
     EMALABLE: process.env.ENABLE_CLOUDINARY,
   };
+
+  export const UPLOAD_DIR = path.resolve('src', 'uploads');

@@ -7,6 +7,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -14,7 +15,17 @@ export const setupServer = () => {
   const app = express();
   app.use(express.json());
   app.use(cors());
+
   app.use('/api-docs', swaggerDocs());
+  app.use('/uploads', express.static(UPLOAD_DIR));
+
+    app.get('/', (req, res) =>
+        res.send(
+            // `Hello! It is Wordisstuff home work.  Click <a href="${tps.domain}${authDb.port}/api-docs/"> Api Docs </a>`,
+            `Hello! It is Wordisstuff home work.  Click <a href="https://contacts-qbcs.onrender.com/api-docs/"> Api Docs </a>`,
+        ),
+    );
+
   app.use(cookieParser());
   app.use(
     pino({
