@@ -21,7 +21,7 @@ export const setupServer = () => {
 
     app.get('/', (req, res) =>
         res.send(
-            `Hello! It is Wordisstuff home work.  Click <a href="https://contacts-qbcs.onrender.com/api-docs/"> Api Docs </a>`,
+            `Hello! It is Kondratenko Olha home work.  Click <a href="https://contacts-qbcs.onrender.com/api-docs/"> Api Docs </a>`,
         ),
     );
 
