@@ -12,7 +12,7 @@ tags:
   - name: contacts
     description: operations about contacts.
 servers:
-  #посилання на задеплоєний сайт
+  - url: https://contacts-qbcs.onrender.com #посилання на задеплоєний сайт
   - url: http://localhost:3000
 paths:
   # Посилання на ендпоінти
